@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="theme-color" content="#070b1a" />
+  <meta name="description" content="CLOUDCHATBOT — your futuristic cloud-powered AI assistant. Premium glassmorphic chat experience powered by Puter.js." />
+  <title>CLOUDCHATBOT — Futuristic AI Chat</title>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="style.css" />
+
+  <!-- Puter.js -->
+  <script src="https://js.puter.com/v2/"></script>
+
+  <!-- Inline SVG favicon -->
+  <link rel="icon" href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><defs><radialGradient id='g' cx='50%25' cy='50%25' r='50%25'><stop offset='0%25' stop-color='%2380e9ff'/><stop offset='60%25' stop-color='%237c5cff'/><stop offset='100%25' stop-color='%23070b1a'/></radialGradient></defs><circle cx='32' cy='32' r='28' fill='url(%23g)'/></svg>" />
+</head>
+<body>
+  <!-- Animated Background -->
+  <div class="bg-stage" aria-hidden="true">
+    <div class="bg-grid"></div>
+    <div class="bg-cloud cloud-a"></div>
+    <div class="bg-cloud cloud-b"></div>
+    <div class="bg-cloud cloud-c"></div>
+    <div class="bg-beam beam-a"></div>
+    <div class="bg-beam beam-b"></div>
+    <div class="bg-particles" id="particles"></div>
+  </div>
+
+  <!-- =========================== LANDING =========================== -->
+  <section id="landing" class="landing">
+    <header class="nav">
+      <a class="brand" href="#landing">
+        <span class="brand-orb"></span>
+        <span class="brand-name">CLOUD<span>CHAT</span>BOT</span>
+      </a>
+      <nav class="nav-links">
+        <a href="#features">Features</a>
+        <a href="#chat">Chat</a>
+        <a href="#footer">About</a>
+      </nav>
+      <button class="btn btn-ghost" data-action="open-chat">Launch App</button>
+    </header>
+
+    <div class="hero">
+      <div class="hero-badges">
+        <span class="badge"><span class="dot"></span> No API Key</span>
+        <span class="badge">Powered by Puter.js</span>
+        <span class="badge">Fast AI Chat</span>
+        <span class="badge">Premium UI</span>
+      </div>
+
+      <h1 class="hero-title">
+        <span class="title-grad">CLOUDCHATBOT</span>
+      </h1>
+      <p class="hero-sub">Your futuristic cloud-powered AI assistant.</p>
+
+      <div class="hero-cta">
+        <button class="btn btn-primary glow" data-action="open-chat">
+          <span>Start Chatting</span>
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+        </button>
+        <a class="btn btn-ghost" href="#features">Explore Features</a>
+      </div>
+
+      <div class="hero-orb" aria-hidden="true">
+        <div class="orb-ring r1"></div>
+        <div class="orb-ring r2"></div>
+        <div class="orb-ring r3"></div>
+        <div class="orb-core"></div>
+      </div>
+    </div>
+
+    <!-- Features -->
+    <section id="features" class="features">
+      <h2 class="section-title">Built for the next generation of AI</h2>
+      <p class="section-sub">A premium, glassmorphic experience designed to feel like a luxury cloud OS.</p>
+
+      <div class="feature-grid">
+        <article class="feature-card">
+          <div class="feature-icon ic-bolt"></div>
+          <h3>Streaming AI</h3>
+          <p>Realistic typing effect with token-by-token streaming for natural conversation.</p>
+        </article>
+        <article class="feature-card">
+          <div class="feature-icon ic-shield"></div>
+          <h3>No API Key</h3>
+          <p>Sign-in handled by Puter.js. No keys, no setup, just chat.</p>
+        </article>
+        <article class="feature-card">
+          <div class="feature-icon ic-brain"></div>
+          <h3>Multiple Models</h3>
+          <p>Switch between GPT, Claude, Gemini and DeepSeek with a single click.</p>
+        </article>
+        <article class="feature-card">
+          <div class="feature-icon ic-cloud"></div>
+          <h3>Cloud-Native</h3>
+          <p>Runs entirely in your browser. Static, fast, and deployable anywhere.</p>
+        </article>
+        <article class="feature-card">
+          <div class="feature-icon ic-spark"></div>
+          <h3>Smart Memory</h3>
+          <p>Conversation context saved locally for seamless follow-up replies.</p>
+        </article>
+        <article class="feature-card">
+          <div class="feature-icon ic-glass"></div>
+          <h3>Premium Design</h3>
+          <p>Glassmorphism, neon accents, animated clouds and floating particles.</p>
+        </article>
+      </div>
+    </section>
+  </section>
+
+  <!-- =========================== APP =========================== -->
+  <main id="chat" class="app" aria-label="CLOUDCHATBOT application">
+    <!-- Sidebar -->
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar-head">
+        <a class="brand small" href="#landing">
+          <span class="brand-orb"></span>
+          <span class="brand-name">CLOUD<span>CHAT</span>BOT</span>
+        </a>
+        <button class="icon-btn sidebar-close" id="sidebarClose" aria-label="Close sidebar">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18M6 6l12 12"/></svg>
+        </button>
+      </div>
+
+      <button class="btn btn-primary new-chat" id="newChatBtn">
+        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+        <span>New Chat</span>
+      </button>
+
+      <div class="sidebar-section">
+        <div class="sidebar-label">Recent chats</div>
+        <ul class="chat-list" id="chatList" aria-label="Recent chats"></ul>
+        <div class="empty-list" id="emptyList">No chats yet. Start a new one.</div>
+      </div>
+
+      <div class="sidebar-foot">
+        <button class="btn btn-ghost full" id="openSettings">
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3h.1a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8v.1a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/></svg>
+          Settings
+        </button>
+        <div class="user-card">
+          <div class="user-avatar">U</div>
+          <div class="user-meta">
+            <div class="user-name">You</div>
+            <div class="user-status"><span class="dot ok"></span> Connected</div>
+          </div>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Sidebar overlay (mobile) -->
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+    <!-- Chat Pane -->
+    <section class="chat-pane">
+      <!-- Top bar -->
+      <header class="topbar">
+        <button class="icon-btn" id="sidebarToggle" aria-label="Open sidebar">
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+        </button>
+
+        <div class="topbar-title">
+          <div class="t-status"><span class="dot ok pulse"></span> Online</div>
+          <div class="t-name" id="activeChatName">New conversation</div>
+        </div>
+
+        <div class="topbar-tools">
+          <div class="model-selector">
+            <label for="modelSelect" class="sr-only">Model</label>
+            <div class="select-wrap">
+              <select id="modelSelect" aria-label="AI model">
+                <option value="gpt-5-nano" selected>gpt-5-nano</option>
+                <option value="gpt-4o-mini">gpt-4o-mini</option>
+                <option value="claude-sonnet-4">claude-sonnet-4</option>
+                <option value="deepseek-chat">deepseek-chat</option>
+                <option value="gemini-2.5-flash">gemini-2.5-flash</option>
+              </select>
+              <svg class="caret" viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+            </div>
+          </div>
+          <button class="icon-btn" id="topClearBtn" title="Clear current chat" aria-label="Clear chat">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2M6 6l1 14a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2l1-14"/></svg>
+          </button>
+          <button class="icon-btn theme-glow" id="themeGlow" title="Glow indicator" aria-label="Theme glow">
+            <span class="glow-dot"></span>
+          </button>
+        </div>
+      </header>
+
+      <!-- Messages -->
+      <div class="messages" id="messages" aria-live="polite">
+        <!-- Empty state -->
+        <div class="empty-state" id="emptyState">
+          <div class="empty-orb">
+            <div class="orb-core small"></div>
+            <div class="orb-ring r1"></div>
+            <div class="orb-ring r2"></div>
+          </div>
+          <h2>Hello, I'm <span class="grad">CLOUDCHATBOT</span></h2>
+          <p>Ask me anything — I can write, code, brainstorm, and create.</p>
+
+          <div class="prompt-suggestions" id="promptSuggestions">
+            <button class="chip" data-prompt="Create a Facebook Reel script about an AI saving the world">Create a Facebook Reel script</button>
+            <button class="chip" data-prompt="Explain quantum computing simply, like I'm 12">Explain this simply</button>
+            <button class="chip" data-prompt="Generate 5 futuristic website ideas for a startup">Generate a futuristic website idea</button>
+            <button class="chip" data-prompt="Write a viral caption for a launch post about an AI app">Write a viral caption</button>
+            <button class="chip" data-prompt="Help me code a small to-do app in JavaScript">Help me code an app</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Composer -->
+      <div class="composer-wrap">
+        <div class="composer glass">
+          <button class="icon-btn ghost" title="Attach (coming soon)" aria-label="Attach" disabled>
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m21.4 11.05-9.19 9.19a6 6 0 0 1-8.49-8.49l9.2-9.19a4 4 0 0 1 5.66 5.66L9.4 17.39a2 2 0 1 1-2.83-2.83l8.49-8.48"/></svg>
+          </button>
+
+          <textarea
+            id="promptInput"
+            class="prompt-input"
+            rows="1"
+            placeholder="Message CLOUDCHATBOT…  (Shift + Enter for new line)"
+            autocomplete="off"
+            spellcheck="true"
+          ></textarea>
+
+          <button class="icon-btn ghost" title="Voice (coming soon)" aria-label="Voice" disabled>
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2M12 19v4M8 23h8"/></svg>
+          </button>
+
+          <button class="send-btn" id="sendBtn" aria-label="Send message">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 2 11 13"/><path d="M22 2 15 22l-4-9-9-4 20-7z"/></svg>
+          </button>
+
+          <button class="stop-btn" id="stopBtn" aria-label="Stop generating" hidden>
+            <span class="stop-square"></span>
+            <span>Stop</span>
+          </button>
+        </div>
+        <div class="composer-foot">
+          <span id="puterStatus" class="puter-status"><span class="dot"></span> Connecting to Puter…</span>
+          <span class="hint">Enter ⏎ to send · Shift + Enter for newline</span>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- =========================== SETTINGS PANEL =========================== -->
+  <div class="modal" id="settingsModal" aria-hidden="true">
+    <div class="modal-backdrop" data-close-modal></div>
+    <div class="modal-card glass" role="dialog" aria-labelledby="settingsTitle" aria-modal="true">
+      <header class="modal-head">
+        <h3 id="settingsTitle">Settings</h3>
+        <button class="icon-btn" data-close-modal aria-label="Close settings">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18M6 6l12 12"/></svg>
+        </button>
+      </header>
+
+      <div class="modal-body">
+        <div class="setting">
+          <div class="setting-head">
+            <label for="tempRange">AI Creativity (Temperature)</label>
+            <span class="setting-val" id="tempVal">0.7</span>
+          </div>
+          <input id="tempRange" type="range" min="0" max="1.5" step="0.05" value="0.7" />
+          <div class="setting-hint">Lower = focused, Higher = creative</div>
+        </div>
+
+        <div class="setting">
+          <div class="setting-head">
+            <label for="maxTokens">Max response length</label>
+            <span class="setting-val" id="maxTokensVal">1024</span>
+          </div>
+          <input id="maxTokens" type="range" min="128" max="4096" step="64" value="1024" />
+          <div class="setting-hint">Maximum tokens for the AI response.</div>
+        </div>
+
+        <div class="setting row">
+          <div>
+            <div class="setting-title">Stream response</div>
+            <div class="setting-hint">Show the answer as it's being generated.</div>
+          </div>
+          <label class="switch">
+            <input type="checkbox" id="streamToggle" checked />
+            <span class="slider"></span>
+          </label>
+        </div>
+
+        <div class="setting row">
+          <div>
+            <div class="setting-title">Sound effects</div>
+            <div class="setting-hint">Subtle send / receive cues.</div>
+          </div>
+          <label class="switch">
+            <input type="checkbox" id="soundToggle" />
+            <span class="slider"></span>
+          </label>
+        </div>
+
+        <div class="setting row">
+          <div>
+            <div class="setting-title">Compact mode</div>
+            <div class="setting-hint">Tighter spacing for power users.</div>
+          </div>
+          <label class="switch">
+            <input type="checkbox" id="compactToggle" />
+            <span class="slider"></span>
+          </label>
+        </div>
+
+        <div class="setting">
+          <button class="btn btn-danger full" id="clearAllBtn">
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2M6 6l1 14a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2l1-14"/></svg>
+            Clear all saved chats
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast container -->
+  <div class="toast-stack" id="toastStack" aria-live="polite"></div>
+
+  <!-- =========================== FOOTER =========================== -->
+  <footer id="footer" class="footer">
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <span class="brand-orb"></span>
+        <span class="brand-name">CLOUD<span>CHAT</span>BOT</span>
+      </div>
+      <p class="footer-text">CLOUDCHATBOT — Futuristic AI chat powered by Puter.js.</p>
+      <div class="footer-links">
+        <a href="#features">Features</a>
+        <a href="#chat">Chat</a>
+        <a href="https://docs.puter.com/" target="_blank" rel="noopener">Puter Docs</a>
+      </div>
+    </div>
+    <div class="footer-bottom">© <span id="year"></span> CLOUDCHATBOT. All rights reserved.</div>
+  </footer>
+
+  <script src="app.js" defer></script>
+</body>
+</html>
