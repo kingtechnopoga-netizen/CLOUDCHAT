@@ -335,6 +335,165 @@
     }
   }
 
+  /* ---------------- Cursor glow ---------------- */
+  function initCursorGlow() {
+    const glow = $("#cursorGlow");
+    if (!glow) return;
+    if (!window.matchMedia("(hover: hover) and (pointer: fine)").matches) return;
+    let tx = 0, ty = 0, cx = 0, cy = 0, raf = null;
+    const onMove = (e) => {
+      tx = e.clientX; ty = e.clientY;
+      els.body.classList.add("cursor-active");
+      if (!raf) raf = requestAnimationFrame(loop);
+    };
+    const loop = () => {
+      cx += (tx - cx) * 0.18;
+      cy += (ty - cy) * 0.18;
+      glow.style.transform = `translate(${cx}px, ${cy}px) translate(-50%, -50%)`;
+      if (Math.abs(tx - cx) > 0.3 || Math.abs(ty - cy) > 0.3) {
+        raf = requestAnimationFrame(loop);
+      } else {
+        raf = null;
+      }
+    };
+    window.addEventListener("mousemove", onMove, { passive: true });
+    window.addEventListener("mouseleave", () => els.body.classList.remove("cursor-active"));
+  }
+
+  /* ---------------- Scroll reveals ---------------- */
+  function initReveals() {
+    const items = $$("[data-reveal]");
+    if (!items.length) return;
+    if (!("IntersectionObserver" in window)) {
+      items.forEach((el) => el.classList.add("in-view"));
+      return;
+    }
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("in-view");
+          io.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12, rootMargin: "0px 0px -40px 0px" });
+    items.forEach((el, i) => {
+      if (!el.dataset.delay) el.dataset.delay = String((i % 4) + 1);
+      io.observe(el);
+    });
+  }
+
+  /* ---------------- 3D tilt cards ---------------- */
+  function initTilt() {
+    const cards = $$(".feature-card.tilt");
+    if (!cards.length) return;
+    if (!window.matchMedia("(hover: hover) and (pointer: fine)").matches) return;
+    cards.forEach((card) => {
+      card.addEventListener("mousemove", (e) => {
+        const rect = card.getBoundingClientRect();
+        const x = (e.clientX - rect.left) / rect.width;
+        const y = (e.clientY - rect.top) / rect.height;
+        const rx = (0.5 - y) * 8;
+        const ry = (x - 0.5) * 10;
+        card.style.setProperty("--rx", rx.toFixed(2) + "deg");
+        card.style.setProperty("--ry", ry.toFixed(2) + "deg");
+        card.style.setProperty("--mx", (x * 100).toFixed(1) + "%");
+        card.style.setProperty("--my", (y * 100).toFixed(1) + "%");
+      });
+      card.addEventListener("mouseleave", () => {
+        card.style.setProperty("--rx", "0deg");
+        card.style.setProperty("--ry", "0deg");
+      });
+    });
+  }
+
+  /* ---------------- Animated counters ---------------- */
+  function initCounters() {
+    const nums = $$(".stat-num[data-count]");
+    if (!nums.length) return;
+    const animate = (el) => {
+      const target = Number(el.dataset.count) || 0;
+      const prefix = el.dataset.prefix || "";
+      const suffix = el.dataset.suffix || "";
+      const dur = 1400;
+      const start = performance.now();
+      const tick = (t) => {
+        const p = Math.min(1, (t - start) / dur);
+        const eased = 1 - Math.pow(1 - p, 3);
+        const v = Math.round(target * eased);
+        el.textContent = `${prefix}${v}${suffix}`;
+        if (p < 1) requestAnimationFrame(tick);
+      };
+      requestAnimationFrame(tick);
+    };
+    if (!("IntersectionObserver" in window)) {
+      nums.forEach(animate);
+      return;
+    }
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          animate(entry.target);
+          io.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.4 });
+    nums.forEach((n) => io.observe(n));
+  }
+
+  /* ---------------- Demo chat typewriter ---------------- */
+  function initHeroDemo() {
+    const out = $("#heroDemoOut");
+    if (!out) return;
+    const lines = [
+      "Picture an AI cockpit at 30,000 ft of pure cloud — neon orbs, frosted glass, holo-buttons.",
+      "Hero: a slow-rotating sphere that pulses to a typing rhythm.",
+      "Tagline: \u201cThink at the speed of light.\u201d",
+      "CTA: \u201cBoard the future\u201d \u2192 launches a chat in zero clicks.",
+    ];
+    let i = 0, j = 0, deleting = false;
+    const tick = () => {
+      const cur = lines[i % lines.length];
+      if (!deleting) {
+        j++;
+        out.textContent = cur.slice(0, j);
+        if (j >= cur.length) { deleting = true; setTimeout(tick, 1800); return; }
+      } else {
+        j -= 2;
+        out.textContent = cur.slice(0, Math.max(0, j));
+        if (j <= 0) { deleting = false; i++; }
+      }
+      setTimeout(tick, deleting ? 18 : 28 + Math.random() * 40);
+    };
+    // Start when visible
+    if ("IntersectionObserver" in window) {
+      const io = new IntersectionObserver((entries) => {
+        entries.forEach((e) => {
+          if (e.isIntersecting) { tick(); io.disconnect(); }
+        });
+      }, { threshold: 0.3 });
+      io.observe(out);
+    } else {
+      tick();
+    }
+  }
+
+  /* ---------------- Click ripple ---------------- */
+  function initRipples() {
+    document.addEventListener("click", (e) => {
+      const target = e.target.closest(".btn, .chip, .icon-btn, .send-btn");
+      if (!target) return;
+      const rect = target.getBoundingClientRect();
+      const ripple = document.createElement("span");
+      ripple.className = "ripple-fx";
+      const size = Math.max(rect.width, rect.height) * 1.4;
+      ripple.style.width = ripple.style.height = size + "px";
+      ripple.style.left = (e.clientX - rect.left - size / 2) + "px";
+      ripple.style.top = (e.clientY - rect.top - size / 2) + "px";
+      target.appendChild(ripple);
+      setTimeout(() => ripple.remove(), 650);
+    });
+  }
+
   /* ---------------- Chats: CRUD ---------------- */
   function getActiveChat() {
     return state.chats.find((c) => c.id === state.activeId) || null;
@@ -1048,6 +1207,12 @@
     wireEvents();
     applySettingsUI();
     createParticles();
+    initCursorGlow();
+    initReveals();
+    initTilt();
+    initCounters();
+    initHeroDemo();
+    initRipples();
 
     // Restore active chat / list
     if (state.activeId && !state.chats.find((c) => c.id === state.activeId)) {
